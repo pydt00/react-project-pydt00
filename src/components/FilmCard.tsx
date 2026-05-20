@@ -17,7 +17,7 @@ export default function FilmCard({ film } : Props) {
             {watched ?
                 <p><span>✅</span> Zhlénuto</p>
             :
-                <button onClick={() => setWatched(true)}>
+                <button onClick={() => {setWatched(true); console.log('Set film to watched!')}}>
                     Označit jako zhlédnuto
                 </button>
             }
