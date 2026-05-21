@@ -31,7 +31,7 @@ export default function FilmList() {
         <div>
             <button onClick={setAllAsWatched}>Označit vše jako shlédnuto</button>
             {films.map(film => (
-                <FilmCard film={film} onToggle={toggleWatched}/>
+                <FilmCard key={film.title} film={film} onToggle={toggleWatched}/>
             ))}
         </div>
     )

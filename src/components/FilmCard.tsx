@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import type { Film } from '../types/Film.tsx';
-import { useWatchlist } from '@/hooks/useWatchlist.tsx';
 
 type Props = {
+    key: string
     film: Film,
     onToggle: (title:string) => void;
 }
