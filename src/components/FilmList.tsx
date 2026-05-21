@@ -1,6 +1,7 @@
 import FilmCard from '@/components/FilmCard.tsx';
 import type { Film } from '../types/Film.tsx';
 import { useWatchlist } from '@/hooks/useWatchlist.tsx';
+import { ThemeButton } from './Random.tsx';
 
 const initialFilms: Film[] = [
     {
@@ -29,6 +30,7 @@ export default function FilmList() {
 
     return (
         <div>
+            <ThemeButton/>
             <button onClick={setAllAsWatched}>Označit vše jako shlédnuto</button>
             {films.map(film => (
                 <FilmCard key={film.title} film={film} onToggle={toggleWatched}/>
