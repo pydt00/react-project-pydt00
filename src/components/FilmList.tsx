@@ -1,7 +1,8 @@
 import FilmCard from '@/components/FilmCard.tsx';
 import type { Film } from '../types/Film.tsx';
+import { useWatchlist } from '@/hooks/useWatchlist.tsx';
 
-const mockFilms: Film[] = [
+const initialFilms: Film[] = [
     {
         title: "The Shawshank Redemption",
         year: 1994,
@@ -24,10 +25,13 @@ const mockFilms: Film[] = [
 ];
 
 export default function FilmList() {
+    const {films, toggleWatched, setAllAsWatched} = useWatchlist(initialFilms);
+
     return (
         <div>
-            {mockFilms.map(film => (
-                <FilmCard film={film} />
+            <button onClick={setAllAsWatched}>Označit vše jako shlédnuto</button>
+            {films.map(film => (
+                <FilmCard film={film} onToggle={toggleWatched}/>
             ))}
         </div>
     )

@@ -1,23 +1,23 @@
 import { useState } from 'react';
 import type { Film } from '../types/Film.tsx';
+import { useWatchlist } from '@/hooks/useWatchlist.tsx';
 
 type Props = {
-    film: Film;
+    film: Film,
+    onToggle: (title:string) => void;
 }
 
-export default function FilmCard({ film } : Props) {
-    const [watched, setWatched] = useState(film.watched);
-
+export default function FilmCard(p : Props) {
     return (
         <div>
-            <h2>{film.title}</h2>
-            <p><b>Rok:</b> {film.year}</p>
-            <p><b>Žánr:</b> {film.genre}</p>
-            <p><span>⭐</span> {film.rating}</p>
-            {watched ?
+            <h2>{p.film.title}</h2>
+            <p><b>Rok:</b> {p.film.year}</p>
+            <p><b>Žánr:</b> {p.film.genre}</p>
+            <p><span>⭐</span> {p.film.rating}</p>
+            {p.film.watched ?
                 <p><span>✅</span> Zhlénuto</p>
             :
-                <button onClick={() => {setWatched(true); console.log('Set film to watched!')}}>
+                <button onClick={() => {p.onToggle(p.film.title)}}>
                     Označit jako zhlédnuto
                 </button>
             }
