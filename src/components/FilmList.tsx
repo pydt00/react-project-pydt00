@@ -15,7 +15,7 @@ export default function FilmList() {
             {/* 2. Obalíme mapování filmů do grid containeru */}
             <div className={styles.gridContainer}>
                 {films.map(film => (
-                    <FilmCard key={film.title} film={film} onToggle={toggleWatched}/>
+                    <FilmCard key={film.id} film={film} onToggle={toggleWatched}/>
                 ))}
             </div>
         </div>

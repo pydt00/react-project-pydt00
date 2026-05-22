@@ -6,7 +6,7 @@ import styles from './FilmCard.module.css';
 type Props = {
     key: string
     film: Film,
-    onToggle: (id: number) => void;
+    onToggle: (id: string) => void;
 }
 
 export default function FilmCard(p : Props) {

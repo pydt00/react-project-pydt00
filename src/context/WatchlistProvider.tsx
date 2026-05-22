@@ -1,47 +1,43 @@
 import type { Film } from "@/types/Film"
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
-import { useEffect } from "react";
+import { useQuery } from '@tanstack/react-query';
 
 type WatchlistContextType = {
     films: Film[];
     addFilm: (title: string, year: number, genre: string, rating: number) => void;
-    removeFilm: (id: number) => void;
-    toggleWatched: (id: number) => void;
+    removeFilm: (id: string) => void;
+    toggleWatched: (id: string) => void;
     setAllAsWatched: () => void;
+    isLoading: boolean;
+    isError: boolean;
+    refetch: () => void;
 }
 
 export const WatchlistContext = createContext<WatchlistContextType>({} as WatchlistContextType);
 
 export function WatchlistProvider({ children }:{ children: ReactNode }) {
     const [films, setFilms] = useState<Film[]>([]);
-    const [maxId, setMaxId] = useState(0);
+
+    const { data, isLoading, isError, refetch } = useQuery<Film[], Error>({
+        queryKey: ['films'],
+        queryFn: async (): Promise<Film[]> => {
+            const res = await fetch('/films.json');
+            if (!res.ok) throw new Error('Network response was not ok');
+            return (await res.json()) as Film[];
+        },
+    });
 
     useEffect(() => {
-        fetch('/films.json') // Path to your JSON file in the public folder
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((data: Film[]) => {
-                setFilms(data);
-                
-                // Set the next available ID based on the loaded data
-                const highestId = data.reduce((max, film) => film.id > max ? film.id : max, -1);
-                setMaxId(highestId + 1);
-            })
-            .catch(error => console.error('Error loading films:', error));
-    }, []);
+        if (data && Array.isArray(data)) setFilms(data as Film[]);
+    }, [data]);
 
     const addFilm = (title: string, year: number, genre: string, rating: number) => {
-        const newFilm : Film = {id: maxId, title, year, genre, rating, watched: false};
+        const newFilm : Film = {id: Date.now().toString(), title, year, genre, rating, watched: false};
         setFilms(prev => [...prev, newFilm]);
-        setMaxId(prev => prev + 1);
     }
 
-    const toggleWatched = (id: number) => {
+    const toggleWatched = (id: string) => {
         setFilms(prev => prev.map((film) => film.id === id ? { ...film, watched: !film.watched } : film));
     }
 
@@ -49,7 +45,7 @@ export function WatchlistProvider({ children }:{ children: ReactNode }) {
         setFilms((prev) => prev.map(film => ({...film, watched: true})));
     }
 
-    const removeFilm = (id: number) => {
+    const removeFilm = (id: string) => {
         setFilms(films.filter((film) => film.id !== id));
     }
 
@@ -59,7 +55,7 @@ export function WatchlistProvider({ children }:{ children: ReactNode }) {
     }, [films])
 
     return (
-        <WatchlistContext.Provider value={{ films, addFilm, removeFilm, toggleWatched, setAllAsWatched }}>
+        <WatchlistContext.Provider value={{ films, addFilm, removeFilm, toggleWatched, setAllAsWatched, isLoading, isError, refetch }}>
             { children }
         </WatchlistContext.Provider>
     )
