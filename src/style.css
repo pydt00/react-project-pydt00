@@ -1,0 +1,27 @@
+:root {
+
+    /* Colors */
+    --color-black: #000000;
+    --color-gray: #151515;
+    --color-orange-1: #f9a245;
+    --color-orange-2: #f07a00;
+    --color-orange-3: #d45101;
+
+    /* Spacing */
+    --space-1: 0.25rem;   /* 4px */
+    --space-2: 0.5rem;    /* 8px */
+    --space-4: 1rem;      /* 16px */
+    --space-8: 2rem;      /* 32px */
+
+    /* Text */
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+
+    /* Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+}
+
+

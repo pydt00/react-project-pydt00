@@ -1,0 +1,62 @@
+/* Base card styling */
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 12px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* Hover effect: gentle lift and shadow expansion */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Visually distinct style for watched films */
+.watchedCard {
+  border-color: #2ecc71; /* Green border */
+  background-color: #f9fbf9; /* Subtle green/clean background tint */
+}
+
+/* Optional helper styles to make the card text look cleaner */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0;
+}
+
+.removeButton {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.removeButton:hover {
+  background-color: #e03333;
+}
+
+.watchButton {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.watchButton:hover {
+  background-color: #2980b9;
+}
+
+.watchedBadge {
+  color: #27ae60;
+  font-weight: bold;
+}

@@ -1,6 +1,7 @@
 import type { Film } from '../types/Film.tsx';
 import { useContext } from 'react';
 import { WatchlistContext } from '@/context/WatchlistProvider.tsx';
+import styles from './FilmCard.module.css';
 
 type Props = {
     key: string
@@ -11,19 +12,27 @@ type Props = {
 export default function FilmCard(p : Props) {
     const { films, addFilm, removeFilm, toggleWatched, setAllAsWatched } = useContext(WatchlistContext);
 
+// 2. Conditionally combine classes based on the watched state
+    const cardClass = `${styles.card} ${p.film.watched ? styles.watchedCard : ''}`;
+
     return (
-        <div>
-            <h2>{p.film.title} <button onClick={() => removeFilm(p.film.id)}>Odebrat</button></h2>
+        <div className={cardClass}>
+            <h2 className={styles.header}>
+                {p.film.title} 
+                <button className={styles.removeButton} onClick={() => removeFilm(p.film.id)}>
+                    Odebrat
+                </button>
+            </h2>
             <p><b>Rok:</b> {p.film.year}</p>
             <p><b>Žánr:</b> {p.film.genre}</p>
             <p><span>⭐</span> {p.film.rating}</p>
             {p.film.watched ?
-                <p><span>✅</span> Zhlénuto</p>
+                <p className={styles.watchedBadge}><span>✅</span> Zhlédnuto</p>
             :
-                <button onClick={() => {p.onToggle(p.film.id)}}>
+                <button className={styles.watchButton} onClick={() => {p.onToggle(p.film.id)}}>
                     Označit jako zhlédnuto
                 </button>
             }
         </div>
-    )
+    );
 }
