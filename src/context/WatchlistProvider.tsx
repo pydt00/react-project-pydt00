@@ -3,31 +3,6 @@ import { createContext, useState } from "react";
 import type { ReactNode } from "react";
 import { useEffect } from "react";
 
-const mockFilms: Film[] = [
-    {
-        id: 0,
-        title: "The Shawshank Redemption",
-        year: 1994,
-        genre: "Drama",
-        rating: 4.6,
-        watched: false,
-    }, {
-        id: 1,
-        title: "Harry Potter and the Deathly Hallows: Part 2",
-        year: 2011,
-        genre: "Fantasy",
-        rating: 4.8,
-        watched: true,
-    }, {
-        id: 2,
-        title: "Pulp Fiction",
-        year: 1994,
-        genre: "Drama",
-        rating: 4.2,
-        watched: false,
-    }
-];
-
 type WatchlistContextType = {
     films: Film[];
     addFilm: (title: string, year: number, genre: string, rating: number) => void;
@@ -39,8 +14,26 @@ type WatchlistContextType = {
 export const WatchlistContext = createContext<WatchlistContextType>({} as WatchlistContextType);
 
 export function WatchlistProvider({ children }:{ children: ReactNode }) {
-    const [films, setFilms] = useState(mockFilms);
-    const [maxId, setMaxId] = useState(mockFilms.length);
+    const [films, setFilms] = useState<Film[]>([]);
+    const [maxId, setMaxId] = useState(0);
+
+    useEffect(() => {
+        fetch('/films.json') // Path to your JSON file in the public folder
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data: Film[]) => {
+                setFilms(data);
+                
+                // Set the next available ID based on the loaded data
+                const highestId = data.reduce((max, film) => film.id > max ? film.id : max, -1);
+                setMaxId(highestId + 1);
+            })
+            .catch(error => console.error('Error loading films:', error));
+    }, []);
 
     const addFilm = (title: string, year: number, genre: string, rating: number) => {
         const newFilm : Film = {id: maxId, title, year, genre, rating, watched: false};
@@ -49,7 +42,7 @@ export function WatchlistProvider({ children }:{ children: ReactNode }) {
     }
 
     const toggleWatched = (id: number) => {
-        setFilms(films.map((film) => film.id === id ? { ...film, watched: !film.watched} : film));
+        setFilms(prev => prev.map((film) => film.id === id ? { ...film, watched: !film.watched } : film));
     }
 
     const setAllAsWatched = () => {
@@ -63,7 +56,7 @@ export function WatchlistProvider({ children }:{ children: ReactNode }) {
     useEffect(() => {
         const watchedCount = films.filter(f => f.watched).length;
         document.title = `Watchlist (${watchedCount}/${films.length} zhlédnuto)`
-    })
+    }, [films])
 
     return (
         <WatchlistContext.Provider value={{ films, addFilm, removeFilm, toggleWatched, setAllAsWatched }}>

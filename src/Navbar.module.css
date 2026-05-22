@@ -1,0 +1,30 @@
+.nav {
+  display: flex;
+  gap: 20px;
+  background-color: #f8f9fa;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 24px;
+}
+
+.link {
+  text-decoration: none;
+  color: #666666;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.link:hover {
+  color: #333333;
+  background-color: #ededed;
+}
+
+/* The active state styling */
+.activeLink {
+  color: #3498db !important; /* Distinct blue text */
+  background-color: rgba(52, 152, 219, 0.1); /* Subtle blue background pill */
+  font-weight: 600;
+}

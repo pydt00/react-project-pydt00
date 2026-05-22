@@ -1,0 +1,26 @@
+.errorContainer {
+  display: flex;
+  flex-direction: column; /* Stacks elements vertically */
+  align-items: center;    /* Centers items horizontally */
+  justify-content: center; /* Centers items vertically if container has height */
+  min-height: 70vh;       /* Keeps it centered relative to the viewport height */
+  padding: 24px;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.errorLabel {
+  font-size: 32px;
+  font-weight: bold;
+  color: #e74c3c;         /* Clean, striking red error color */
+  margin-bottom: 20px;    /* Space between the text and the image below */
+  letter-spacing: 1px;
+}
+
+.errorImage {
+  max-width: 100%;
+  width: 350px;           /* Adjust this width to match your specific image */
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;     /* Smooth corner edges for the image placeholder */
+}
