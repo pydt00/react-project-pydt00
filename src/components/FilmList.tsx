@@ -1,7 +1,6 @@
 import FilmCard from '@/components/FilmCard.tsx';
 import { WatchlistContext } from '@/context/WatchlistProvider.tsx';
 import { useContext } from 'react';
-import AddFilmForm from './AddFilmForm';
 import styles from "./FilmList.module.css";
 
 export default function FilmList() {
@@ -19,8 +18,6 @@ export default function FilmList() {
                     <FilmCard key={film.title} film={film} onToggle={toggleWatched}/>
                 ))}
             </div>
-            
-            <AddFilmForm/>
         </div>
     );
 }
