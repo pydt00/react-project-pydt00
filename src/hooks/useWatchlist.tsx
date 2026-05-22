@@ -1,6 +1,8 @@
 import type { Film } from "@/types/Film";
 import { useEffect, useState } from "react";
 
+// UNUSED
+
 export function useWatchlist(initialFilms : Film[]) {
     const [films, setFilms] = useState(initialFilms);
 

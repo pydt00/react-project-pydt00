@@ -3,7 +3,7 @@ import type { Film } from '../types/Film.tsx';
 type Props = {
     key: string
     film: Film,
-    onToggle: (title:string) => void;
+    onToggle: (id: number) => void;
 }
 
 export default function FilmCard(p : Props) {
@@ -16,7 +16,7 @@ export default function FilmCard(p : Props) {
             {p.film.watched ?
                 <p><span>✅</span> Zhlénuto</p>
             :
-                <button onClick={() => {p.onToggle(p.film.title)}}>
+                <button onClick={() => {p.onToggle(p.film.id)}}>
                     Označit jako zhlédnuto
                 </button>
             }
