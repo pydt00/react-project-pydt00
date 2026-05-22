@@ -1,6 +1,7 @@
 import type { Film } from "@/types/Film"
 import { createContext, useState } from "react";
 import type { ReactNode } from "react";
+import { useEffect } from "react";
 
 const mockFilms: Film[] = [
     {
@@ -30,6 +31,7 @@ const mockFilms: Film[] = [
 type WatchlistContextType = {
     films: Film[];
     addFilm: (title: string, year: number, genre: string, rating: number) => void;
+    removeFilm: (id: number) => void;
     toggleWatched: (id: number) => void;
     setAllAsWatched: () => void;
 }
@@ -54,8 +56,17 @@ export function WatchlistProvider({ children }:{ children: ReactNode }) {
         setFilms((prev) => prev.map(film => ({...film, watched: true})));
     }
 
+    const removeFilm = (id: number) => {
+        setFilms(films.filter((film) => film.id !== id));
+    }
+
+    useEffect(() => {
+        const watchedCount = films.filter(f => f.watched).length;
+        document.title = `Watchlist (${watchedCount}/${films.length} zhlédnuto)`
+    })
+
     return (
-        <WatchlistContext.Provider value={{ films, addFilm, toggleWatched, setAllAsWatched }}>
+        <WatchlistContext.Provider value={{ films, addFilm, removeFilm, toggleWatched, setAllAsWatched }}>
             { children }
         </WatchlistContext.Provider>
     )

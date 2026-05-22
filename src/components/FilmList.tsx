@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { useState } from 'react';
 
 export default function FilmList() {
-    const { films, addFilm, toggleWatched, setAllAsWatched } = useContext(WatchlistContext);
+    const { films, addFilm, removeFilm, toggleWatched, setAllAsWatched } = useContext(WatchlistContext);
 
     const [title, setTitle] = useState('');
     const [year, setYear] = useState('');
