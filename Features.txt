@@ -1,0 +1,16 @@
+Musí zahrnovat:
+ - komponenty
+ - hooks
+ - routing
+ - data fetching
+ - TypeScript
+ - 1 unit test pomocné funkce
+ - 1 integrační test komponenty.
+
+Hodnotí se:
+ - funkcionalita
+ - kvalita kódu
+ - struktura projektu
+ - Git historie
+ - README file na GitHubu
+ - orientace v kódu při obhajobě
